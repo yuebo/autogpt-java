@@ -1,4 +1,4 @@
-package com.eappcat.autogpt.models.memory;
+package com.eappcat.autogpt.models.summary;
 
 import lombok.Data;
 

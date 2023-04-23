@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "chatgpt")
 @Component
 @Data
-public class OpenAiConfigProperties {
+public class AutoGptConfigProperties {
     private String apiKey;
     private String url;
     private String model = "gpt-3.5-turbo";
-
     private int maxToken = 4000;
+
+    private String fileRoot="/opt/autogpt";
+
+
 }

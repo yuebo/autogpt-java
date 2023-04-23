@@ -1,6 +1,6 @@
 package com.eappcat.autogpt.service;
 
-import com.eappcat.autogpt.config.OpenAiConfigProperties;
+import com.eappcat.autogpt.config.AutoGptConfigProperties;
 import com.unfbx.chatgpt.OpenAiClient;
 import com.unfbx.chatgpt.entity.chat.ChatCompletion;
 import com.unfbx.chatgpt.entity.chat.Message;
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OpenAiService {
     private final OpenAiClient openAiClient;
-    private final OpenAiConfigProperties configProperties;
+    private final AutoGptConfigProperties configProperties;
 
 
     @Retryable(include = Exception.class,maxAttempts = 5,backoff = @Backoff(delay = 5000))

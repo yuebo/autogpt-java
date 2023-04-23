@@ -1,7 +1,5 @@
 package com.eappcat.autogpt.command;
 
-import java.util.Map;
-
 /**
  * Command interface,
  * Each command should extend this.

@@ -1,7 +1,7 @@
 package com.eappcat.autogpt.service;
 
-import com.eappcat.autogpt.models.memory.SummaryItem;
-import com.eappcat.autogpt.models.memory.SummaryItemQuery;
+import com.eappcat.autogpt.models.summary.SummaryItem;
+import com.eappcat.autogpt.models.summary.SummaryItemQuery;
 
 import java.util.List;
 

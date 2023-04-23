@@ -21,4 +21,6 @@ public interface IMemoryService {
      * @return
      */
     List<String> getMemoryBySize(String taskId, String textToSearch ,int size);
+
+    void clear(String taskId);
 }

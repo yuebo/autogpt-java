@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class OpenAiClientConfiguration {
 
     @Bean
-    public OpenAiClient openAiClient(OpenAiConfigProperties configProperties){
+    public OpenAiClient openAiClient(AutoGptConfigProperties configProperties){
         OpenAiClient openAiClient = OpenAiClient.builder()
                 .apiKey(Arrays.asList(configProperties.getApiKey()))
                 .apiHost(configProperties.getUrl().concat("/"))

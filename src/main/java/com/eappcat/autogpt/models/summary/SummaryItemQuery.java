@@ -1,4 +1,4 @@
-package com.eappcat.autogpt.models.memory;
+package com.eappcat.autogpt.models.summary;
 
 public class SummaryItemQuery {
     private String taskId;

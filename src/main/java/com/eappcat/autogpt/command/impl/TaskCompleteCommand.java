@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class TaskCompleteCommand implements Command {
     @Override
     public boolean accept(String cmd) {
-        return "do_nothing".equals(cmd);
+        return "task_complete".equals(cmd);
     }
 
     @Override
