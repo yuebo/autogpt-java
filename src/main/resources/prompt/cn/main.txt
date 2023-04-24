@@ -18,8 +18,7 @@
 5. search_files: 搜索本地文件, 参数为: "directory": "<directory>"
 6. write_to_file: 写入本地文件, 参数为: "filename": "<filename>", "text": "<text>"
 7. browse_website: 浏览网站并抓取页面内容, 参数为: "url": "<url>", "question": "<what_you_want_to_find_on_website>"
-8. do_nothing: 不执行任何内容, 参数为空
-9. task_complete, 任务完成或者关闭 ,参数为: "reason": "<reason>"
+8. task_complete, 任务完成或者关闭 ,参数为: "reason": "<reason>"
 
 
 

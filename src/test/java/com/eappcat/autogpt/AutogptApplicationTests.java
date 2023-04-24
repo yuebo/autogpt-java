@@ -4,14 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.eappcat.autogpt.command.Command;
 import com.eappcat.autogpt.command.CommandResult;
 import com.eappcat.autogpt.command.ExecuteContext;
-import com.eappcat.autogpt.command.impl.BrowseSiteCommand;
-import com.eappcat.autogpt.command.impl.DoNothingCommand;
-import com.eappcat.autogpt.command.impl.GoogleCommand;
-import com.eappcat.autogpt.command.impl.TaskCompleteCommand;
+import com.eappcat.autogpt.command.impl.*;
 import com.eappcat.autogpt.exception.JsonParseException;
 import com.eappcat.autogpt.models.template.*;
 import com.eappcat.autogpt.models.thought.ThoughtResponse;
-import com.eappcat.autogpt.service.FileStoreService;
 import com.eappcat.autogpt.service.IMemoryService;
 import com.eappcat.autogpt.service.OpenAiService;
 import com.eappcat.autogpt.enums.PromptTemplateLang;
@@ -46,6 +42,9 @@ class AutogptApplicationTests {
 	@Autowired
 	private IMemoryService memoryService;
 
+	@Autowired
+	private AbstractBrowseSiteCommand command;
+
 	@Test
 	void testGoogleCommand() throws Exception{
 		GoogleCommand command = new GoogleCommand();
@@ -57,17 +56,16 @@ class AutogptApplicationTests {
 		log.info("result: {}",result);
 	}
 
-//	@Test
-//	void testBrowsSite() throws Exception{
-//		BrowseSiteCommand command = new BrowseSiteCommand();
-//		HashMap<String,String> params = new HashMap<>();
-//		params.put("question","What are the most common repairs for iPhone14 in China?");
-//		params.put("url","https://www.ifixit.com/Device/iPhone_14");
-//		ExecuteContext executeContext = new ExecuteContext();
-//		executeContext.setArgs(params);
-//		CommandResult result = command.execute(executeContext);
-//		log.info("result: {}",result);
-//	}
+	@Test
+	void testBrowsSite() throws Exception{
+		HashMap<String,String> params = new HashMap<>();
+		params.put("question","淄博烧烤热度如何？");
+		params.put("url","https://www.baidu.com");
+		ExecuteContext executeContext = new ExecuteContext();
+		executeContext.setArgs(params);
+		CommandResult result = command.execute(executeContext);
+		log.info("result: {}",result);
+	}
 
 
 	@Test
@@ -77,7 +75,7 @@ class AutogptApplicationTests {
 		MainPrompt prompt = new MainPrompt();
 		prompt.setAiName("AppleAI");
 		prompt.setRole("你是一个数据分析师，将使用互联网上的信息分析内容。");
-		prompt.setGoals(Lists.newArrayList("查询苹果(Apple)的中国官方网站地址","任务完成后需要退出和关闭"));
+		prompt.setGoals(Lists.newArrayList("找出iPhone在中国市场的维修率，并归类前三位原因，并抓取数据的数据源地址","任务完成后需要退出和关闭"));
 		String lang = promptTemplateService.parse(prompt, templateLang);
 		String taskId="1";
 
@@ -105,7 +103,7 @@ class AutogptApplicationTests {
 			List<String> memories = Lists.newArrayList();
 			if (shortMemory.size()>0){
 				// 查找相似度比较类似的内容
-				memories = memoryService.getMemoryBySize(taskId,shortMemory.get(shortMemory.size()-1),3);
+				memories = memoryService.getMemoryBySize(taskId,shortMemory.get(shortMemory.size()-1),1);
 			} else {
 				memoryService.clear(taskId);
 			}
@@ -117,12 +115,15 @@ class AutogptApplicationTests {
 			messages.add(Message.builder().role(Message.Role.SYSTEM).content(date).build());
 			messages.add(Message.builder().role(Message.Role.SYSTEM).content(memory).build());
 			messages.add(Message.builder().role(Message.Role.USER).content(nextStep).build());
+
+
 			//将最后一次上下文放入历史
 			if (shortMemory.size()>0){
 				messages.add(Message.builder().role(Message.Role.ASSISTANT).content(shortMemory.get(shortMemory.size()-1)).build());
 				if (commandResult.size()>0){
 					messages.add(Message.builder().role(Message.Role.SYSTEM).content(commandResult.get(commandResult.size()-1)).build());
 				}
+				messages.add(Message.builder().role(Message.Role.USER).content(nextStep).build());
 			}
 
 			String messageText = openAiService.chat(messages ,null);
