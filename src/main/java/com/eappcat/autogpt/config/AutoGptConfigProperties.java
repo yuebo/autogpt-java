@@ -15,5 +15,7 @@ public class AutoGptConfigProperties {
 
     private String fileRoot="/opt/autogpt";
 
+    private String browser="jsoup";
+
 
 }

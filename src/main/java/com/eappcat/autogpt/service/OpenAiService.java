@@ -33,12 +33,12 @@ public class OpenAiService {
             model = ChatCompletion.Model.GPT_3_5_TURBO;
         }
 
-        int tokens = configProperties.getMaxToken()-calculateToken(messages,model.getName());
+        int tokens = Math.max(configProperties.getMaxToken()-calculateToken(messages,model.getName()),600);
         ChatCompletion chatCompletion = ChatCompletion.builder().messages(messages).model(model.getName()).maxTokens(tokens).build();
         return openAiClient.chatCompletion(chatCompletion).getChoices().get(0).getMessage().getContent();
     }
 
-    private Integer calculateToken(List<Message> messages,String model) {
+    public Integer calculateToken(List<Message> messages,String model) {
         int total = 0;
         for (int i = 0; i < messages.size(); i++) {
             total += TikTokensUtil.tokens(model.toLowerCase(),messages.get(i).getContent());

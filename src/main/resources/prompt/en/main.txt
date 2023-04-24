@@ -17,9 +17,8 @@ Commands:
 4. search_files: Search Files, args: "directory": "<directory>"
 5. write_to_file: Write to file, args: "filename": "<filename>", "text": "<text>"
 6. browse_website: Browse Website and scrape data on the page, args: "url": "<url>", "question": "<what_you_want_to_find_on_website>"
-7. do_nothing: Do Nothing, args:
-8. task_complete: Task Complete (Shutdown), args: "reason": "<reason>"
-9. google_search: Google Search, args: "query": "<query>"
+7. task_complete: Task Complete (Shutdown), args: "reason": "<reason>"
+8. google_search: Google Search, args: "query": "<query>"
 
 
 Resources:
@@ -52,4 +51,3 @@ Response Format:
         }
     }
 }
-Ensure the response can beparsed by Python json.loads
